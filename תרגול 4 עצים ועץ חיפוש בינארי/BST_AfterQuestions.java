@@ -244,7 +244,7 @@ public class BST_AfterQuestions
 			else 
 				current = current.left;
 		}
-		return numOfChilds(current) - 1;
+		return numOfChilds(current.left) + numOfChilds(current.right);
 	}
 	public int numOfChilds(Node current) {
 		if(current == null) return 0;
@@ -319,6 +319,18 @@ public class BST_AfterQuestions
 		return (isBST(curr.left, min, curr.data-1) && 
 				isBST(curr.right, curr.data+1, max)); 
 	}
+
+	// Find minimum value function in Binary Tree:
+	public static int minValue(Node current) {
+		if(current == null) return Integer.MAX_VALUE;
+		int data = current.data;
+		int rdata = minValue(current.right);
+		int ldata = minValue(current.left);
+		if(rdata < data) data = rdata;
+		if(ldata < data) data = ldata;
+		return data;
+	}
+
 	// ******************* Question 2 ********************************** //
 	public static boolean isIdentical(Node x, Node y) { 
 		/*1. both empty */
@@ -328,7 +340,7 @@ public class BST_AfterQuestions
 		/* 2. both non-empty -> compare them */
 		if (x != null && y != null)  
 			return (x.data == y.data 
-			&& isIdentical(x.left, x.left) 
+			&& isIdentical(x.left, y.left) 
 			&& isIdentical(x.right, y.right)); 
 
 		/* 3. one empty, one not -> false */
@@ -387,15 +399,16 @@ public class BST_AfterQuestions
 	public int kthSmallest(Node root, int k) {
 		if( k > size() ) return Integer.MAX_VALUE;
 		List<Integer> list = new ArrayList<>();
-		preOrder(root, list);
+		InOrder(root, list);
 		return list.get(k - 1);
 	}
 
-	private void preOrder(Node root, List<Integer> list) {
+
+	private void InOrder(Node root, List<Integer> list) {
 		if (root == null) return;
-		preOrder(root.left, list);
+		InOrder(root.left, list);
 		list.add(root.data);
-		preOrder(root.right, list);
+		InOrder(root.right, list);
 	}
 	// ******************* Question 6 ********************************** //
 	public String isLeaf(int data){ 
@@ -497,19 +510,29 @@ public class BST_AfterQuestions
 	// ******************* Question 9 ********************************** //
 	public boolean isFullTree(Node node) {
 		// if empty tree 
-        if(node == null) 
-        return true; 
-           
-        // if leaf node 
-        if(node.left == null && node.right == null ) 
-            return true; 
-           
-        // if both left and right subtrees are not null 
-        // Return Recur on Left subtree and right Subtree
-        if((node.left != null) && (node.right != null)) 
-            return (isFullTree(node.left) && isFullTree(node.right)); 
-           
-        // if none work 
-        return false; 
+		if(node == null) 
+			return true; 
+
+		// if leaf node 
+		if(node.left == null && node.right == null ) 
+			return true; 
+
+		// if both left and right subtrees are not null 
+		// Return Recur on Left subtree and right Subtree
+		if((node.left != null) && (node.right != null)) 
+			return (isFullTree(node.left) && isFullTree(node.right)); 
+
+		// if none work 
+		return false; 
+	}
+	// ******************* Question EXTRA ********************************** //
+	public Node returnNodeInBinaryTree(Node current,int key) {
+		if(current == null) return null;
+		if(current.data == key) return current;
+		Node r = returnNodeInBinaryTree(current.right,key);
+		Node l = returnNodeInBinaryTree(current.left,key);
+		if(r != null) return r;
+		if(l != null) return l;
+		return null;
 	}
 }

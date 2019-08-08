@@ -238,7 +238,7 @@ public class BST_BeforeQuestions
 			else 
 				current = current.left;
 		}
-		return numOfChilds(current) - 1;
+		return numOfChilds(current.left) + numOfChilds(current.right);
 	}
 	public int numOfChilds(Node current) {
 		if(current == null) return 0;
