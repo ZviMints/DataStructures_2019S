@@ -2,21 +2,9 @@ package S5;
 
 // Based on WilliamFiset
 // Zvi Mints 
-public class AVLTree {
 
-	class Node {
-		int bf; // Balance Factor
-		int value; // Value of the current node
-		Node left, right; // The left and the right children
-		int height; // the height of this node in the tree
-		// Constructor
-		public Node(int value) {
-			this.value = value;
-			right = left = null;
-			value = 0;
-			height = 0;
-		}
-	}
+public class AVLTree {
+	
 	// The root node of the AVL Tree
 	Node root;
 	private int count = 0; // Number of nodes inside the tree
@@ -24,7 +12,7 @@ public class AVLTree {
 	// The height of a rooted tree is the number of edges
 	// between the tree's root and its furthest leaf
 	public int height() {
-		if(root == null) return 0;
+		if(root == null) return -1;
 		return root.height;
 	}
 	// -------------------------------------
@@ -68,7 +56,7 @@ public class AVLTree {
 		// Base case
 		if( current == null ) return new Node(value);
 
-		// Compare corrent value to the value in the node
+		// Compare current value to the value in the node
 		int cmp = value - current.value;
 
 		// Insert the node in right subtree
@@ -184,7 +172,7 @@ public class AVLTree {
 			if(node.left == null) // 1 Child or 0
 				return node.right;
 
-			else if(node.left == null) // 1 Child
+			else if(node.right == null) // 1 Child
 				return node.left;
 			else { // 2 Children
 				// Choose to remove from left subtree
