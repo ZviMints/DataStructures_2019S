@@ -26,7 +26,8 @@ public class MyQueue<TypeName> {
 		if (size >= arr.length){			
 			TypeName[] newData = (TypeName[]) new Object[arr.length*2 + 1];
 			for(int i=0; i<arr.length; i++)
-				newData[i] = arr[i];        
+				newData[i] = arr[(i+head) % arr.length];
+			head = 0;
 			arr = (TypeName[]) newData;
 		}		
 	}
